@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="main.css" />
+    <title>Test Lead Form</title>
+  </head>
+  <body>
+  	 <h1>Find the Right Career Move</h1>
+  	 <p> Answer a few questions, and work one-on-one with a member of our Admissions team to find your ideal course.</p>
+  	 <button id="myBtn">Connect With Us</button>
+
+<!-- Trigger/Open The Modal -->
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+    </div>
+      <form id="regForm" action="/action_page.php">
+  <!-- One "tab" for each step in the form: -->
+  <div class="tab">
+  	<h2>What Do You Want to Accomplish?</h2>
+      <button onclick="nextPrev(1)"> Coding: I want to build dynamic websites and applications.</button>
+      <button onclick="nextPrev(1)" type="button" id="nextBtn"> Design: I want to create user-friendly digital experiences.</button>
+      <button onclick="nextPrev(1) type="button" id="nextBtn"">Data: I want to drive decision-making with accurate analyses.</button>
+      <button onclick="nextPrev(1) type="button" id="nextBtn"">Marketing: I want to craft campaign strategies that audiences love.</button>
+      <button onclick="nextPrev(1) type="button" id="nextBtn"">Product Management: I want to take the lead, bringing big ideas to life.</button>
+  </div>
+  <div class="tab">Name:
+    <p><input placeholder="First name..." oninput="this.className = ''" name="fname"></p>
+    <p><input placeholder="Last name..." oninput="this.className = ''" name="lname"></p>
+  </div>
+  <div class="tab">Name:
+    <p><input placeholder="First name..." oninput="this.className = ''" name="fname"></p>
+    <p><input placeholder="Last name..." oninput="this.className = ''" name="lname"></p>
+  </div>
+  <div class="tab">Please provide the following information
+  	 <p><input placeholder="Location..." oninput="this.className = ''" name="location"></p>
+    <p><input placeholder="E-mail..." oninput="this.className = ''" name="email"></p>
+    <p><input placeholder="Phone..." oninput="this.className = ''" name="phone"></p>
+  </div>
+  <div style="overflow:auto;">
+    <div style="float:right;">
+      <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+      <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+    </div>
+  </div>
+  <!-- Circles which indicates the steps of the form: -->
+  <div style="text-align:center;margin-top:40px;">
+    <span class="step"></span>
+    <span class="step"></span>
+    <span class="step"></span>
+    <span class="step"></span>
+  </div>
+</form>
+    </div>
+    <div class="modal-footer">
+      <button>Next</button>
+    </div>
+  </div>
+
+</div>
+<script src="app.js"> </script>
+  </body>
+</html>
