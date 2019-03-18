@@ -80,7 +80,7 @@ input.invalid {
 }
 
 button {
-  background-color: #4CAF50;
+  background-color: red;
   color: #ffffff;
   border: none;
   padding: 10px 20px;
