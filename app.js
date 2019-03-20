@@ -63,7 +63,7 @@ function nextPrev(n) {
     document.getElementById("regForm").submit();
     return false;
   }
-  // Otherwise, display the correct tab:
+  // Else, display the correct tab:
   showTab(currentTab);
 }
 
@@ -100,3 +100,37 @@ function fixStepIndicator(n) {
   //... and adds the "active" class on the current step:
   x[n].className += " active";
 }
+
+// SHEETSU POST METHOD
+
+// <head>
+//   <script src="//script.sheetsu.com/"></script>
+// </head>
+// <body>
+//   <form id="myForm">
+//     <input type="text" name="first_name">
+//     <input type="text" name="score">
+//     <button type="submit">Save</button>
+//   </form>
+//   <script>
+//     document.querySelector("#myForm").addEventListener("submit", function (e) {
+//       e.preventDefault();
+//       saveData();
+//     });
+//     function saveData() {
+//       var first_name = document.getElementsByName("first_name")[0].value,
+//         score = document.getElementsByName("score")[0].value;
+//       var data = {
+//         name: first_name,
+//         score: score
+//       };
+//       Sheetsu.write("https://sheetsu.com/apis/v1.0dw/020b2c0f/", data, {}, function (result) {
+//         console.log(result);
+//       });
+//     }
+//   </script>
+// </body>
+
+
+
+
