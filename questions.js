@@ -102,89 +102,168 @@ var resultOptions = [
     },
 ];
 
-function request(){
- var url = 'https://api.github.com/users/smcurrey528/repos';
+
+var quizSteps = $('#quizzie .quiz-step'), totalScore = 0;
+quizSteps.each(function () {
+    var currentStep = $(this), ansOpts = currentStep.children('.quiz-answer');
+    ansOpts.each(function () {
+        var eachOpt = $(this);
+        eachOpt[0].addEventListener('click', check, false);
+        function check() {
+            var $this = $(this), value = $this.attr('data-quizIndex'), answerScore = parseInt(value);
+            if (currentStep.children('.active').length > 0) {
+                var wasActive = currentStep.children('.active'), oldScoreValue = wasActive.attr('data-quizIndex'), oldScore = parseInt(oldScoreValue);
+                currentStep.children('.active').removeClass('active');
+                $this.addClass('active');
+                totalScore -= oldScoreValue;
+                totalScore += answerScore;
+                calcResults(totalScore);
+            } else {
+                $this.addClass('active');
+                totalScore += answerScore;
+                calcResults(totalScore);
+                updateStep(currentStep);
+            }
+        }
+    });
+});
+function updateStep(currentStep) {
+    if (currentStep.hasClass('current')) {
+        currentStep.removeClass('current');
+        currentStep.next().addClass('current');
+    }
+}
+function calcResults(totalScore) {
+    if (quizSteps.find('.active').length == quizSteps.length) {
+        var resultsTitle = $('#results h1'), resultsDesc = $('#results .desc');
+        var lowestScoreArray = $('#quizzie .low-value').map(function () {
+            return $(this).attr('data-quizIndex');
+        });
+        var minScore = 0;
+        for (var i = 0; i < lowestScoreArray.length; i++) {
+            if (window.CP.shouldStopExecution(1)) {
+                break;
+            }
+            minScore += lowestScoreArray[i] << 0;
+        }
+        window.CP.exitedLoop(1);
+        var highestScoreArray = $('#quizzie .high-value').map(function () {
+            return $(this).attr('data-quizIndex');
+        });
+        var maxScore = 0;
+        for (var i = 0; i < highestScoreArray.length; i++) {
+            if (window.CP.shouldStopExecution(2)) {
+                break;
+            }
+            maxScore += highestScoreArray[i] << 0;
+        }
+        window.CP.exitedLoop(2);
+        var range = maxScore - minScore, numResults = resultOptions.length, interval = range / (numResults - 1), increment = '', n = 0;
+        while (n < numResults) {
+            increment = minScore + interval * n;
+            if (totalScore <= increment) {
+                resultsTitle.replaceWith('<h1>' + resultOptions[n].title + '</h1>');
+                resultsDesc.replaceWith('<p class=\'desc\'>' + resultOptions[n].desc + '</p>');
+                return;
+            } else {
+                n++;
+            }
+        }
+    }
+}
+
+
+
+
+
+// function request(){
+//  var url = 'https://api.github.com/users/smcurrey528/repos';
  
- fetch(url).then(data => data.json()).then(data => {
-     var repolink = data.map(repo => {
-         console.log(repo.url)
-     })
- })
+//  fetch(url).then(data => data.json()).then(data => {
+//      var repolink = data.map(repo => {
+//          console.log(repo.url)
+//      })
+//  })
     
 
-}
+// }
 
-request()
+// request()
 
-//POSTING FORM DATA 
-  var testForm = document.getElementById('regForm');
-  testForm.onsubmit = function(event) {
-    event.preventDefault();
+// //POSTING FORM DATA 
+//   var testForm = document.getElementById('regForm');
+//   testForm.onsubmit = function(event) {
+//     event.preventDefault();
 
-    var request = new XMLHttpRequest();
-    // POST to httpbin which returns the POST data as JSON
-    request.open('POST', 'https://external.generalassemb.ly/api/v1/website/leads', /* async = */ false);
+//     var request = new XMLHttpRequest();
+//     // POST to httpbin which returns the POST data as JSON
+//     request.open('POST', 'https://external.generalassemb.ly/api/v1/website/leads', /* async = */ false);
 
-    var formData = new FormData(document.getElementById('regForm'));
+//     var formData = new FormData(document.getElementById('regForm'));
 
-    request.send(formData);
+//     request.send(formData);
 
-    console.log(request.response);
+//     console.log(request.response);
 
-}
+// }
 
 
-var questionArray = [
-  ["What Do You Want to Accomplish?", "Coding: I want to build dynamic websites and applications.", "Design: I want to create user-friendly digital experiences.", "Data: I want to drive decision-making with accurate analyses.", "Marketing: I want to craft campaign strategies that audiences love.", "Product Management: I want to take the lead, bringing big ideas to life."], 
-  ["How much time can you commit to learning?", "Full Time", "Nights & Weekends", "Part Time"]
-];
 
-//populate document
-for (var i = 0; i < questionArray.length; i++){
-  document.write("<form><span class='question'>" + questionArray[i][0] + "</span><br>");
-  for (var x = 1; x < 4; x++){
-    document.write("<input type='radio' class='answer' name='answer' value='" + questionArray[i][x] + "'>" + questionArray[i][x] + "");
-  }
-  document.write("</form><br>");
-}
 
-var characterAnswer = [
-  [0, 0, 0,'Code'],
-  [0, 0, 1,'Code'],
-  [1, 1, 1,'UX'],
-  [1, 1, 2,'UX'],
-  [2, 2, 2,'Data Science']
-];
 
-//add click check event listeners
-var inputs = document.getElementsByTagName('input');
-for(var i = 0; i < inputs.length; i++){
-  inputs[i].addEventListener('click', check);
-}
 
-var userAnswers = [];
 
-//check questions answers
-function check(){
-  userAnswers = [];
-  var c = 0;
-  for(var i = 0; i < inputs.length; i++){
-    if(inputs[i].checked) {
-      userAnswers.push(i%3);
-      c++;
-    }
-  }
-  if(c==questionArray.length) rate();
-}
+// var questionArray = [
+//   ["What Do You Want to Accomplish?", "Coding: I want to build dynamic websites and applications.", "Design: I want to create user-friendly digital experiences.", "Data: I want to drive decision-making with accurate analyses.", "Marketing: I want to craft campaign strategies that audiences love.", "Product Management: I want to take the lead, bringing big ideas to life."], 
+//   ["How much time can you commit to learning?", "Full Time", "Nights & Weekends", "Part Time"]
+// ];
 
-//rate the answers per char
-function rate(){
-  console.log(userAnswers);
-  for(var i = 0; i < userAnswers.length; i++){
-    for(var j = 0; j < characterAnswer.length; j++){
-      characterAnswer[j][4] = 0;
-      for(var x = 0; x < 4; x++){
-        if(userAnswers[i] == characterAnswer[j][x])
-          characterAnswer[j][4]++;
-      }
-    }
+// //populate document
+// for (var i = 0; i < questionArray.length; i++){
+//   document.write("<form><span class='question'>" + questionArray[i][0] + "</span><br>");
+//   for (var x = 1; x < 4; x++){
+//     document.write("<input type='radio' class='answer' name='answer' value='" + questionArray[i][x] + "'>" + questionArray[i][x] + "");
+//   }
+//   document.write("</form><br>");
+// }
+
+// var characterAnswer = [
+//   [0, 0, 0,'Code'],
+//   [0, 0, 1,'Code'],
+//   [1, 1, 1,'UX'],
+//   [1, 1, 2,'UX'],
+//   [2, 2, 2,'Data Science']
+// ];
+
+// //add click check event listeners
+// var inputs = document.getElementsByTagName('input');
+// for(var i = 0; i < inputs.length; i++){
+//   inputs[i].addEventListener('click', check);
+// }
+
+// var userAnswers = [];
+
+// //check questions answers
+// function check(){
+//   userAnswers = [];
+//   var c = 0;
+//   for(var i = 0; i < inputs.length; i++){
+//     if(inputs[i].checked) {
+//       userAnswers.push(i%3);
+//       c++;
+//     }
+//   }
+//   if(c==questionArray.length) rate();
+// }
+
+// //rate the answers per char
+// function rate(){
+//   console.log(userAnswers);
+//   for(var i = 0; i < userAnswers.length; i++){
+//     for(var j = 0; j < characterAnswer.length; j++){
+//       characterAnswer[j][4] = 0;
+//       for(var x = 0; x < 4; x++){
+//         if(userAnswers[i] == characterAnswer[j][x])
+//           characterAnswer[j][4]++;
+//       }
+//     }
