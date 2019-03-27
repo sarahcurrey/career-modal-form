@@ -103,109 +103,53 @@ var resultOptions = [
 ];
 
 
-var quizSteps = $('#quizzie .quiz-step'), totalScore = 0;
-quizSteps.each(function () {
-    var currentStep = $(this), ansOpts = currentStep.children('.quiz-answer');
-    ansOpts.each(function () {
-        var eachOpt = $(this);
-        eachOpt[0].addEventListener('click', check, false);
-        function check() {
-            var $this = $(this), value = $this.attr('data-quizIndex'), answerScore = parseInt(value);
-            if (currentStep.children('.active').length > 0) {
-                var wasActive = currentStep.children('.active'), oldScoreValue = wasActive.attr('data-quizIndex'), oldScore = parseInt(oldScoreValue);
-                currentStep.children('.active').removeClass('active');
-                $this.addClass('active');
-                totalScore -= oldScoreValue;
-                totalScore += answerScore;
-                calcResults(totalScore);
-            } else {
-                $this.addClass('active');
-                totalScore += answerScore;
-                calcResults(totalScore);
-                updateStep(currentStep);
-            }
-        }
-    });
-});
-function updateStep(currentStep) {
-    if (currentStep.hasClass('current')) {
-        currentStep.removeClass('current');
-        currentStep.next().addClass('current');
-    }
-}
-function calcResults(totalScore) {
-    if (quizSteps.find('.active').length == quizSteps.length) {
-        var resultsTitle = $('#results h1'), resultsDesc = $('#results .desc');
-        var lowestScoreArray = $('#quizzie .low-value').map(function () {
-            return $(this).attr('data-quizIndex');
-        });
-        var minScore = 0;
-        for (var i = 0; i < lowestScoreArray.length; i++) {
-            if (window.CP.shouldStopExecution(1)) {
-                break;
-            }
-            minScore += lowestScoreArray[i] << 0;
-        }
-        window.CP.exitedLoop(1);
-        var highestScoreArray = $('#quizzie .high-value').map(function () {
-            return $(this).attr('data-quizIndex');
-        });
-        var maxScore = 0;
-        for (var i = 0; i < highestScoreArray.length; i++) {
-            if (window.CP.shouldStopExecution(2)) {
-                break;
-            }
-            maxScore += highestScoreArray[i] << 0;
-        }
-        window.CP.exitedLoop(2);
-        var range = maxScore - minScore, numResults = resultOptions.length, interval = range / (numResults - 1), increment = '', n = 0;
-        while (n < numResults) {
-            increment = minScore + interval * n;
-            if (totalScore <= increment) {
-                resultsTitle.replaceWith('<h1>' + resultOptions[n].title + '</h1>');
-                resultsDesc.replaceWith('<p class=\'desc\'>' + resultOptions[n].desc + '</p>');
-                return;
-            } else {
-                n++;
-            }
-        }
-    }
-}
+// curl https://external.generalassemb.ly/api/v1/website/leads -H 'Authorization: 69b874bbbf76721a'
 
 
+// POST LEADS
+//https://external.generalassemb.ly/api/v1/website/leads
+
+// Headers
+// Authorization: 69b874bbbf76721a
+// Accept: application/json
+// Content-Type: application/x-www-form-urlencoded
 
 
-
-// function request(){
-//  var url = 'https://api.github.com/users/smcurrey528/repos';
+function request(){
+ var url = 'https://api.github.com/users/smcurrey528/repos';
  
-//  fetch(url).then(data => data.json()).then(data => {
-//      var repolink = data.map(repo => {
-//          console.log(repo.url)
-//      })
-//  })
+ //can add multiple paramters in fetch but look at order in documentation 
+ //create a header object and pass the key and value like Postman
+ //check if 3rd click and send the api and fetch on 3rd click
+ //if error then make sure it doesn't break everything (silent fail)
+ //.error handles silent errors status 200 for success 
+ fetch(url, apiToken).then(data => data.json()).then(data => {
+     var repolink = data.map(repo => {
+         console.log(repo.url)
+     })
+ })
     
 
-// }
+}
 
-// request()
+request()
 
-// //POSTING FORM DATA 
-//   var testForm = document.getElementById('regForm');
-//   testForm.onsubmit = function(event) {
-//     event.preventDefault();
+//POSTING FORM DATA 
+  var testForm = document.getElementById('regForm');
+  testForm.onsubmit = function(event) {
+    event.preventDefault();
 
-//     var request = new XMLHttpRequest();
-//     // POST to httpbin which returns the POST data as JSON
-//     request.open('POST', 'https://external.generalassemb.ly/api/v1/website/leads', /* async = */ false);
+    var request = new XMLHttpRequest();
+    // POST to httpbin which returns the POST data as JSON
+    request.open('POST', 'https://external.generalassemb.ly/api/v1/website/leads', /* async = */ false);
 
-//     var formData = new FormData(document.getElementById('regForm'));
+    var formData = new FormData(document.getElementById('regForm'));
 
-//     request.send(formData);
+    request.send(formData);
 
-//     console.log(request.response);
+    console.log(request.response);
 
-// }
+}
 
 
 
