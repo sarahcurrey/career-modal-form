@@ -1,5 +1,5 @@
 var resultOptions = [
-    {   
+     "question1:1 question2:1 question3:1": {
         title: 'Software Engineering Immersive',
         desc: '<p>Build rich, interactive, full-stack apps with key languages and dive into algorithms, data structures, design patterns, APIs, and more.</p>'},
 
