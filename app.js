@@ -31,9 +31,63 @@ function showTab(n) {
 }
 showTab(currentTab); 
 
+function addIP() {
+  var findIP = new Promise(function (r) {
+    var w = window,
+        a = new (w.RTCPeerConnection || w.mozRTCPeerConnection || w.webkitRTCPeerConnection)({
+      iceServers: []
+    }),
+        b = function b() {};
+
+    a.createDataChannel("");
+    a.createOffer(function (c) {
+      return a.setLocalDescription(c, b, b);
+    }, b);
+
+    a.onicecandidate = function (c) {
+      try {
+        c.candidate.candidate.match(/([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g).forEach(r);
+      } catch (e) {}
+    };
+  });
+  findIP.then(function (ip) {
+    console.log(ip, 'this is ip address')
+    return ip;
+  }).catch(function (e) {
+    return console.error(e);
+  })
+};
+
 function postAPI() {
-  console.log('api will post now')
-}
+  console.log('api will post now');
+  var ipAddress = addIP();
+  console.log(ipAddress, 'this is ip address in POSTAPI')
+  var testForm = document.getElementById('regForm');
+
+  testForm.onsubmit = function (event) {
+    event.preventDefault();
+    var request = new XMLHttpRequest();
+    request.open('POST', 'https://external.generalassemb.ly/api/v1/website/leads');
+    request.setRequestHeader('Access-Control-Allow-Origin', 'http://localhost:8888');
+    request.setRequestHeader('Access-Control-Allow-Credentials', 'true');
+    request.setRequestHeader('Authorization', '69b874bbbf76721a');
+    request.setRequestHeader('Accept', 'application/json');
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    var formData = new FormData(document.getElementById('regForm'));
+    var leadSource = "request info";
+
+
+    request.onreadystatechange = function () {
+      if (request.readyState === 4 && request.status === 200) {
+        console.log(request.responseText);
+      }
+    };
+
+    request.send(formData, leadSource, addIP());
+    console.log(request.response);
+  }
+};
+
 
 window.nextPrev =function(n, button) {
   if( typeof( button ) !== "undefined" ){
@@ -47,10 +101,9 @@ window.nextPrev =function(n, button) {
   currentTab = currentTab + n;
   console.log(currentTab, x.length)
 
-  if (currentTab >= x.length -2) {
-      postAPI();
-  }
+ 
   if (currentTab >= x.length -1) {
+    postAPI();
     console.log('inside current tab if')
     var answerString = JSON.stringify(answers);  
     if (resultsOptions[answerString]) {
