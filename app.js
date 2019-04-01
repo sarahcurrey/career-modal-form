@@ -1,6 +1,5 @@
-
-window.onload = function(){ 
 var answers = { };
+window.onload = function(){ 
 var modal = document.getElementById('myModal');
 var btn = document.getElementById("myBtn");
 var nextBtn = document.getElementById('nextBtn');
@@ -31,8 +30,12 @@ function showTab(n) {
 }
 showTab(currentTab); 
 
-function addIP() {
-  var findIP = new Promise(function (r) {
+
+
+
+function postAPI() {
+  console.log('api will post now');
+    var findIP = new Promise(function (r) {
     var w = window,
         a = new (w.RTCPeerConnection || w.mozRTCPeerConnection || w.webkitRTCPeerConnection)({
       iceServers: []
@@ -56,12 +59,9 @@ function addIP() {
   }).catch(function (e) {
     return console.error(e);
   })
-};
 
-function postAPI() {
-  console.log('api will post now');
-  var ipAddress = addIP();
-  console.log(ipAddress, 'this is ip address in POSTAPI')
+  console.log(findIP, 'this is findIP');
+ 
   var testForm = document.getElementById('regForm');
 
   testForm.onsubmit = function (event) {
@@ -83,7 +83,7 @@ function postAPI() {
       }
     };
 
-    request.send(formData, leadSource, addIP());
+    request.send(formData, leadSource, findIP);
     console.log(request.response);
   }
 };
@@ -109,7 +109,9 @@ window.nextPrev =function(n, button) {
     if (resultsOptions[answerString]) {
         resultsTitle.innerText= resultsOptions[answerString].title;
         resultsDesc.innerText=  resultsOptions[answerString].desc; 
-        resultsUrl.innerHTML = `<a href=${resultsOptions[answerString].url}> View Course </a>`;
+        resultsUrl.removeAttribute('href');
+        resultsUrl.setAttribute('href',resultsOptions[answerString].url);
+       
         
               }
   }
@@ -120,151 +122,216 @@ var resultsOptions = {
     '{"question1":"1","question2":"1","question3":"1"}': {
         title: 'Software Engineering Immersive',
         desc: 'Build rich, interactive, full-stack apps with key languages and dive into algorithms, data structures, design patterns, APIs, and more.', 
-        url: 'www.generalassemb.ly/education/software-engineering-immersive/'
+        url: '/education/software-engineering-immersive/'
        },
     '{"question1":"2","question3":"1"}': {
         title: 'User Experience Design Immersive',
-        desc: 'The User Experience Design Immersive program is crafted by top practitioners in the field, with a specific focus on helping you transition into a UX design career.'},
+        desc: 'The User Experience Design Immersive program is crafted by top practitioners in the field, with a specific focus on helping you transition into a UX design career.',
+        url: '/education/user-experience-design-immersive'
+      },
     '{"question1":"3","question3":"1"}': {
         title: 'Data Science Immersive',
-        desc: 'Learn the tools and techniques you need to make better decisions through data, and land a job in one of the most sought after fields in tech.'},
+        desc: 'Learn the tools and techniques you need to make better decisions through data, and land a job in one of the most sought after fields in tech.',
+        url: '/education/data-science-immersive'
+      },
     '{"question1":"4","question3":"1"}': {
         title: 'Digital Marketing Immersive',
-        desc: 'Join the high-growth world of digital marketing in our full-time Immersive course. Our expert-designed curriculum is continually updated to keep pace with shifting employer demands. Gain competitive skills, personalized career coaching, and access to resources to continually foster your professional potential.'},
+        desc: 'Join the high-growth world of digital marketing in our full-time Immersive course. Our expert-designed curriculum is continually updated to keep pace with shifting employer demands. Gain competitive skills, personalized career coaching, and access to resources to continually foster your professional potential.',
+        url: '/education/digital-marketing-immersive'
+      },
     '{"question1":"1","question2":"1","question3": "1","question4": "1"}': {
         title: 'Software Engineering Immersive Remote',
-        desc: 'Learn online and build rich, interactive, full-stack apps with key languages and dive into algorithms, data structures, design patterns, APIs, and more.'},
+        desc: 'Learn online and build rich, interactive, full-stack apps with key languages and dive into algorithms, data structures, design patterns, APIs, and more.',
+        url: '/education/software-engineering-immersive/'
+      },
     '{"question1":"1","question2":"3","question3":"1"}': {
         title: 'Python Programming',
-        desc: 'Dive into fundamental concepts and techniques, and build your own custom web or data application.'},
+        desc: 'Dive into fundamental concepts and techniques, and build your own custom web or data application.',
+        url: '/education/python-programming'
+      },
     '{"question1":"1","question2":"3","question3":"3"}': {
         title: 'Python Programming',
-        desc: 'Dive into fundamental concepts and techniques, and build your own custom web or data application.'},
+        desc: 'Dive into fundamental concepts and techniques, and build your own custom web or data application.',
+        url: '/education/python-programming'
+      },
     
     '{"question1":"1","question2":"3","question3":"2"}': {
         title: 'Python Programming',
-        desc: 'Dive into fundamental concepts and techniques, and build your own custom web or data application.'},
+        desc: 'Dive into fundamental concepts and techniques, and build your own custom web or data application.',
+        url: '/education/python-programming'
+      },
     '{"question1":"2","question3":"2"}': {
         title: 'User Experience Design',
-        desc: 'Apply tools like Adobe, Sketch, Illustrator and Invision to create UX documentation for digital products; conduct research to gain insights into customer behavior.'},
+        desc: 'Apply tools like Adobe, Sketch, Illustrator and Invision to create UX documentation for digital products; conduct research to gain insights into customer behavior.',
+        url: '/education/user-experience-design'
+      },
+      '{"question1":"2","question3":"3"}': {
+        title: 'User Experience Design',
+        desc: 'Apply tools like Adobe, Sketch, Illustrator and Invision to create UX documentation for digital products; conduct research to gain insights into customer behavior.',
+        url: '/education/user-experience-design'
+      },
     '{"question1":"4","question3":"2"}': {
         title: 'Digital Marketing',
-        desc: 'Become a driver of your company\'s bottom line by using cutting‐edge techniques and platforms to market products and acquire users.'
+        desc: 'Become a driver of your company\'s bottom line by using cutting‐edge techniques and platforms to market products and acquire users.',
+        url: '/education/digital-marketing-immersive'
+    },
+    '{"question1":"4","question3":"3"}': {
+        title: 'Digital Marketing',
+        desc: 'Become a driver of your company\'s bottom line by using cutting‐edge techniques and platforms to market products and acquire users.',
+        url: '/education/digital-marketing-immersive'
     },
     '{"question1":"3","question3":"2"}': {
         title: 'Data Science',
-        desc: 'Use Python to mine datasets and predict patterns. Build statistical models — regression and classification — that generate usable information from raw data.'
+        desc: 'Use Python to mine datasets and predict patterns. Build statistical models — regression and classification — that generate usable information from raw data.',
+        url: '/education/data-science-immersive'
+    },
+    '{"question1":"3","question3":"3"}': {
+        title: 'Data Science',
+        desc: 'Use Python to mine datasets and predict patterns. Build statistical models — regression and classification — that generate usable information from raw data.',
+        url: '/education/data-science-immersive'
     },
     '{"question1":"5","question3":"1"}': {
         title: 'Product Management',
-        desc: 'Gain leadership and communication skills to succeed in this in-demand field. Learn to launch viable, market-ready products and features that solve real problems for your customers.'
+        desc: 'Gain leadership and communication skills to succeed in this in-demand field. Learn to launch viable, market-ready products and features that solve real problems for your customers.',
+        url: '/education/product-management'
     },
     '{"question1":"5","question3":"2"}': {
         title: 'Product Management',
-        desc: 'Gain leadership and communication skills to succeed in this in-demand field. Learn to launch viable, market-ready products and features that solve real problems for your customers.'
+        desc: 'Gain leadership and communication skills to succeed in this in-demand field. Learn to launch viable, market-ready products and features that solve real problems for your customers.',
+        url: '/education/product-management'
+    },
+    '{"question1":"5","question3":"3"}': {
+        title: 'Product Management',
+        desc: 'Gain leadership and communication skills to succeed in this in-demand field. Learn to launch viable, market-ready products and features that solve real problems for your customers.',
+        url: '/education/product-management'
     },
      '{"question1":"1","question2":"1","question3":"2"}': {
         title: 'Front End Web Development',
-        desc: 'Use HTML5, CSS3, JavaScript, jQuery, GitHub, and Sublime in concert. Build a fully responsive, interactive website that stands apart from the usual templates. '
+        desc: 'Use HTML5, CSS3, JavaScript, jQuery, GitHub, and Sublime in concert. Build a fully responsive, interactive website that stands apart from the usual templates.',
+        url: '/education/front-end-web-development'
     },'{"question1":"1","question2":"1","question3":"3"}': {
         title: 'Front End Web Development',
-        desc: 'Use HTML5, CSS3, JavaScript, jQuery, GitHub, and Sublime in concert. Build a fully responsive, interactive website that stands apart from the usual templates. '
+        desc: 'Use HTML5, CSS3, JavaScript, jQuery, GitHub, and Sublime in concert. Build a fully responsive, interactive website that stands apart from the usual templates.',
+        url: '/education/front-end-web-development'
     },
     '{"question1":"1","question2":"2","question3":"1"}': {
         title: 'Front End Web Development',
-        desc: 'Use HTML5, CSS3, JavaScript, jQuery, GitHub, and Sublime in concert. Build a fully responsive, interactive website that stands apart from the usual templates. '
+        desc: 'Use HTML5, CSS3, JavaScript, jQuery, GitHub, and Sublime in concert. Build a fully responsive, interactive website that stands apart from the usual templates.',
+        url: '/education/front-end-web-development'
     },
 
     '{"question1":"1","question2":"2","question3":"2"}': {
         title: 'Front End Web Development',
-        desc: 'Use HTML5, CSS3, JavaScript, jQuery, GitHub, and Sublime in concert. Build a fully responsive, interactive website that stands apart from the usual templates. '
+        desc: 'Use HTML5, CSS3, JavaScript, jQuery, GitHub, and Sublime in concert. Build a fully responsive, interactive website that stands apart from the usual templates.',
+        url: '/education/front-end-web-development'
     },
 
     '{"question1":"1","question2":"2","question3":"3"}': {
         title: 'Front End Web Development',
-        desc: 'Use HTML5, CSS3, JavaScript, jQuery, GitHub, and Sublime in concert. Build a fully responsive, interactive website that stands apart from the usual templates. '
+        desc: 'Use HTML5, CSS3, JavaScript, jQuery, GitHub, and Sublime in concert. Build a fully responsive, interactive website that stands apart from the usual templates.',
+        url: '/education/front-end-web-development'
     },
     '{"question1":"1","question2":"5","question3":"1"}': {
         title: 'JavaScript Development',
-        desc: 'Learn to code in JavaScript, the native language of the web used by developers the world over.'
+        desc: 'Learn to code in JavaScript, the native language of the web used by developers the world over.',
+        url: '/education/javascript-development'
     },
     '{"question1":"1","question2":"5","question3":"2"}': {
         title: 'JavaScript Development',
-        desc: 'Learn to code in JavaScript, the native language of the web used by developers the world over.'
+        desc: 'Learn to code in JavaScript, the native language of the web used by developers the world over.',
+        url: '/education/javascript-development'
     },
 
     '{"question1":"1","question2":"5","question3":"3"}': {
         title: 'JavaScript Development',
-        desc: 'Learn to code in JavaScript, the native language of the web used by developers the world over.'
+        desc: 'Learn to code in JavaScript, the native language of the web used by developers the world over.',
+        url: '/education/javascript-development'
     },
     '{"question1":"1","question2":"4","question3":"1"}': {
         title: 'React Development',
-        desc: 'Start building maintainable web applications that can handle constantly changing data at scale. Expand your programming toolkit, and discover why both developers and employers favor this robust JavaScript library.'
+        desc: 'Start building maintainable web applications that can handle constantly changing data at scale. Expand your programming toolkit, and discover why both developers and employers favor this robust JavaScript library.',
+        url: '/education/react-development'
     },
     '{"question1":"1","question2":"4","question3":"2"}': {
         title: 'React Development',
-        desc: 'Start building maintainable web applications that can handle constantly changing data at scale. Expand your programming toolkit, and discover why both developers and employers favor this robust JavaScript library.'
+        desc: 'Start building maintainable web applications that can handle constantly changing data at scale. Expand your programming toolkit, and discover why both developers and employers favor this robust JavaScript library.',
+        url: '/education/react-development'
     },
     '{"question1":"1","question2":"4","question3":"3"}': {
         title: 'React Development',
-        desc: 'Start building maintainable web applications that can handle constantly changing data at scale. Expand your programming toolkit, and discover why both developers and employers favor this robust JavaScript library.'
+        desc: 'Start building maintainable web applications that can handle constantly changing data at scale. Expand your programming toolkit, and discover why both developers and employers favor this robust JavaScript library.',
+        url: '/education/react-development'
     },
     '{"question1":"1","question2":"3","question3":"2","question4":"1"}': {
         title: 'Python Programming Remote"',
-        desc: 'Learn online and discover why professionals ranging from analysts to web developers rely on Python programming to excel in their work. Dive into fundamental concepts and techniques, and build your own custom web or data application.'
+        desc: 'Learn online and discover why professionals ranging from analysts to web developers rely on Python programming to excel in their work. Dive into fundamental concepts and techniques, and build your own custom web or data application.',
+        url: 'education/python-programming'
     },
     '{"question1": "2", "question3": "2", "question4": "1"}': {
         title: 'User Experience Design Remote',
-        desc: 'Learn online and apply tools like Adobe, Sketch, Illustrator and Invision to create UX documentation for digital products; conduct research to gain insights into customer behavior.'
+        desc: 'Learn online and apply tools like Adobe, Sketch, Illustrator and Invision to create UX documentation for digital products; conduct research to gain insights into customer behavior.',
+        url: '/education/user-experience-design'
     },
     '{"question1": "4", "question3": "2", "question4":"1"}': {
         title: 'Digital Marketing Remote',
-        desc: ' Learn online and become a driver of your company\'s bottom line by using cutting‐edge techniques and platforms to market products and acquire users.'
+        desc: ' Learn online and become a driver of your company\'s bottom line by using cutting‐edge techniques and platforms to market products and acquire users.',
+        url: '/education/digital-marketing'
     },
     '{"question1": "3", "question3": "2", "question4": "1"}': {
         title: 'Data Science Remote',
-        desc: 'Learn online and use Python to mine datasets and predict patterns.'
+        desc: 'Learn online and use Python to mine datasets and predict patterns.',
+        url: '/education/data-science'
     },
     '{"question1:5", "question3": "2", "question4:1"}': {
         title: 'Product Management Remote',
-        desc: 'Learn online and gain leadership and communication skills to succeed in this in-demand field. Learn to launch viable, market-ready products and features that solve real problems for your customers.'
+        desc: 'Learn online and gain leadership and communication skills to succeed in this in-demand field. Learn to launch viable, market-ready products and features that solve real problems for your customers.',
+        url: '/education/product-management'
     },
 
     '{"question1:" "1", "question2": "2",  "question4": "1"}': {
         title: 'Front End Web Development Remote',
-        desc: ' Learn online and use HTML5, CSS3, JavaScript, jQuery, GitHub, and Sublime in concert.'
+        desc: ' Learn online and use HTML5, CSS3, JavaScript, jQuery, GitHub, and Sublime in concert.',
+        url: '/education/front-end-web-development'
     },
     '{"question1": "1", "question2": "5", "question4":"1"}': {
         title: 'JavaScript Development Remote',
-        desc: 'Learn online and Learn to code in JavaScript, the native language of the web used by developers the world over.'
+        desc: 'Learn online and Learn to code in JavaScript, the native language of the web used by developers the world over.',
+        url: '/education/javascript-development'
     },
     '{"question1": "1", "question2": "4", "question4": "1"}': {
         title: 'React Development Remote',
-        desc: 'Learn online and start building maintainable web applications that can handle constantly changing data at scale. Expand your programming toolkit, and discover why both developers and employers favor this robust JavaScript library. '
+        desc: 'Learn online and start building maintainable web applications that can handle constantly changing data at scale. Expand your programming toolkit, and discover why both developers and employers favor this robust JavaScript library.',
+        url: '/education/react-development'
     },
     '{"question1":"1","question2":"6","question3":"1"}': {
         title: 'iOS Development Immersive',
-        desc: 'Create App Store-ready products by gaining key industry knowledge and specialized skills in Swift, Xcode, mobile design, and more. '
+        desc: 'Create App Store-ready products by gaining key industry knowledge and specialized skills in Swift, Xcode, mobile design, and more.',
+        url: '/education/ios-development-immersive'
     },
     '{"question1":"1","question2":"6","question3":"2"}': {
         title: 'iOS Development Immersive',
-        desc: 'Create App Store-ready products by gaining key industry knowledge and specialized skills in Swift, Xcode, mobile design, and more. '
+        desc: 'Create App Store-ready products by gaining key industry knowledge and specialized skills in Swift, Xcode, mobile design, and more.',
+        url: '/education/ios-development-immersive'
     },
     '{"question1":"1","question2":"6","question3":"3"}': {
         title: 'iOS Development Immersive',
-        desc: 'Create App Store-ready products by gaining key industry knowledge and specialized skills in Swift, Xcode, mobile design, and more. '
+        desc: 'Create App Store-ready products by gaining key industry knowledge and specialized skills in Swift, Xcode, mobile design, and more.',
+        url: '/education/ios-development-immersive'
     },
     '{"question1":"1","question2":"7","question3":"3"}': {
         title: 'Android Development Immersive',
-        desc: 'Join our Android Development Immersive program, and train in the coding, design, and iteration skills essential to starting a career in the sought-after field. '
+        desc: 'Join our Android Development Immersive program, and train in the coding, design, and iteration skills essential to starting a career in the sought-after field.',
+        url: '/education/android-development-immersive'
     },
     '{"question1":"1","question2":"7","question3":"1"}': {
         title: 'Android Development Immersive',
-        desc: 'Join our Android Development Immersive program, and train in the coding, design, and iteration skills essential to starting a career in the sought-after field. '
+        desc: 'Join our Android Development Immersive program, and train in the coding, design, and iteration skills essential to starting a career in the sought-after field.',
+        url: '/education/android-development-immersive'
     },
     '{"question1":"1","question2":"7","question3":"2"}': {
         title: 'Android Development Immersive',
-        desc: 'Join our Android Development Immersive program, and train in the coding, design, and iteration skills essential to starting a career in the sought-after field. '
+        desc: 'Join our Android Development Immersive program, and train in the coding, design, and iteration skills essential to starting a career in the sought-after field.',
+        url: '/education/android-development-immersive'
     }
   };
 
