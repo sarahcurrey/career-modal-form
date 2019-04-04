@@ -35,47 +35,47 @@ showTab(currentTab);
 
 function postAPI() {
   console.log('api will post now');
-    var findIP = new Promise(function (r) {
-    var w = window,
-        a = new (w.RTCPeerConnection || w.mozRTCPeerConnection || w.webkitRTCPeerConnection)({
-      iceServers: []
-    }),
-        b = function b() {};
+var findIP = new Promise(function (r) {
+  var w = window,
+      a = new (w.RTCPeerConnection || w.mozRTCPeerConnection || w.webkitRTCPeerConnection)({
+    iceServers: []
+  }),
+      b = function b() {};
 
-    a.createDataChannel("");
-    a.createOffer(function (c) {
-      return a.setLocalDescription(c, b, b);
-    }, b);
+  a.createDataChannel("");
+  a.createOffer(function (c) {
+    return a.setLocalDescription(c, b, b);
+  }, b);
 
-    a.onicecandidate = function (c) {
-      try {
-        c.candidate.candidate.match(/([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g).forEach(r);
-      } catch (e) {}
-    };
-  });
-  findIP.then(function (ip) {
-    console.log(ip, 'this is ip address')
-    return ip;
-  }).catch(function (e) {
-    return console.error(e);
-  })
+  a.onicecandidate = function (c) {
+    try {
+      c.candidate.candidate.match(/([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g).forEach(r);
+    } catch (e) {}
+  };
+});
+findIP.then(function (ip) {
+  console.log(ip, 'this is ip address');
+  return ip;
+}).catch(function (e) {
+  return console.error(e);
+});
+console.log(findIP, 'this is findIP');
 
-  console.log(findIP, 'this is findIP');
- 
-  var testForm = document.getElementById('regForm');
 
+var testForm = document.getElementById('regForm');
   testForm.onsubmit = function (event) {
     event.preventDefault();
     var request = new XMLHttpRequest();
-    request.open('POST', 'https://external.generalassemb.ly/api/v1/website/leads');
-    request.setRequestHeader('Access-Control-Allow-Origin', 'http://localhost:8888');
+    request.open('POST', 'https://external.generalassemb.ly/api/v1/website/leads', true);
+    request.setRequestHeader('Access-Control-Allow-Headers', 'Authorization');
+    request.setRequestHeader('Access-Control-Allow-Origin', 'https://generalassemb.ly/');
+    request.setRequestHeader('Access-Control-Allow-Methods', 'POST');
     request.setRequestHeader('Access-Control-Allow-Credentials', 'true');
     request.setRequestHeader('Authorization', '69b874bbbf76721a');
     request.setRequestHeader('Accept', 'application/json');
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     var formData = new FormData(document.getElementById('regForm'));
     var leadSource = "request info";
-
 
     request.onreadystatechange = function () {
       if (request.readyState === 4 && request.status === 200) {
@@ -85,8 +85,10 @@ function postAPI() {
 
     request.send(formData, leadSource, findIP);
     console.log(request.response);
-  }
-};
+  };
+}
+
+;
 
 
 window.nextPrev =function(n, button) {
