@@ -1,23 +1,7 @@
 var answers = { };
 window.onload = function(){ 
-var modal = document.getElementById('myModal');
 var btn = document.getElementById("myBtn");
 var nextBtn = document.getElementById('nextBtn');
-var span = document.getElementsByClassName("close")[0];
-btn.onclick = function() {
-  modal.style.display = "block";
-  console.log('this is the btn onclick');
-};
-span.onclick = function() {
-  modal.style.display = "none";
-  console.log('this is the span onlick');
-};
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-    console.log('this is the window onclick');
-  }
-};
 var currentTab = 0;
 function showTab(n) {
   var x = document.getElementsByClassName("tab");
@@ -126,10 +110,10 @@ window.nextPrev =function(n, button) {
   if (n == 1 && !validateForm()) return false;
   x[currentTab].style.display = "none";
   currentTab = currentTab + n;
-  console.log(currentTab, x.length)
+  console.log('current tab number, and length of tab', currentTab, x.length)
 
  
-  if (currentTab >= x.length -1) {
+  if (currentTab >= x.length -6) {
      postAPI();
     console.log('inside current tab if')
     var answerString = JSON.stringify(answers);  
