@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="main.css" />
     <title>Test Lead Form</title>
+    <script src="jquery-3.3.1.min.js"></script>
   </head>
   <body>
 <h1>Find the Right Career Move</h1>
@@ -18,31 +19,31 @@
     <div class="modal-header">
       <span class="close">&times;</span>
     </div>
-		<form id="regForm" action="https://external.generalassemb.ly/api/v1/website/leads" onsubmit="return false" method="POST">
+		<form id="regForm" action="https://generalassemb.ly/expert-network-activation/" onsubmit="return false" method="post">
 		  <!-- One "tab" for each step in the form: -->
 		  <div class="tab">
 		  	<h2>What Do You Want to Accomplish?</h2>
-		      <button name="question1" value="1" onclick="nextPrev(1, this)">Coding: I want to build dynamic websites and applications.</button>
-		      <button name="question1" value="2" onclick="nextPrev(2, this)">Design: I want to create user-friendly digital experiences.</button>
-		      <button name="question1" value="3" onclick="nextPrev(2, this)">Data: I want to drive decision-making with accurate analyses.</button>
-		      <button name="question1" value="4" onclick="nextPrev(2, this)">Marketing: I want to craft campaign strategies that audiences love.</button>
-		      <button name="question1" value="5" onclick="nextPrev(2, this)">Product Management: I want to take the lead, bringing big ideas to life.</button>
+		      <button type="button" name="question1" value="1" onclick="nextPrev(1, this)">Coding: I want to build dynamic websites and applications.</button>
+		      <button type="button" name="question1" value="2" onclick="nextPrev(2, this)">Design: I want to create user-friendly digital experiences.</button>
+		      <button type="button" name="question1" value="3" onclick="nextPrev(2, this)">Data: I want to drive decision-making with accurate analyses.</button>
+		      <button type="button" name="question1" value="4" onclick="nextPrev(2, this)">Marketing: I want to craft campaign strategies that audiences love.</button>
+		      <button type="button" name="question1" value="5" onclick="nextPrev(2, this)">Product Management: I want to take the lead, bringing big ideas to life.</button>
 		  </div>
       <div class="tab">
 		  	<h2>What type of Development:</h2>
-		  	   <button id="prevBtn" name="question2" value="1" onclick="nextPrev(1, this)">Software Engineering: | Your best course for career transformation. Build rich, interactive, full-stack apps.</button>
-		  	   <button name="question2" value="2" onclick="nextPrev(1, this)">Front-End Web Development: | Use HTML5, CSS3, JavaScript, jQuery, GitHub, and Sublime.</button>
-		  	   <button name="question2" value="3" onclick="nextPrev(1, this)">Python Programming: | Learn to code applications spanning web development, data science and analysis, game development, and more.</button>
-		  	   <button name="question2" value="4" onclick="nextPrev(1, this)">React Development: | Build maintainable web applications that can handle constantly changing data at scale.</button>
-		  	   <button name="question2" value="5" onclick="nextPrev(1, this)">Javascript Development: |  Learn to code in JavaScript, the native language of the web.</button>
-		  	   <button name="question2" value="6" onclick="nextPrev(1, this)">iOS Development: | Learn everything you need to create iOS apps from scratch.</button>
-		  	   <button name="question2" value="7" onclick="nextPrev(1, this)">Android Development: | Learn everything you need to create Android apps from scratch.</button>
+		  	   <button id="prevBtn" type="button" name="question2" value="1" onclick="nextPrev(1, this)">Software Engineering: | Your best course for career transformation. Build rich, interactive, full-stack apps.</button>
+		  	   <button type="button" name="question2" value="2" onclick="nextPrev(1, this)">Front-End Web Development: | Use HTML5, CSS3, JavaScript, jQuery, GitHub, and Sublime.</button>
+		  	   <button type="button" name="question2" value="3" onclick="nextPrev(1, this)">Python Programming: | Learn to code applications spanning web development, data science and analysis, game development, and more.</button>
+		  	   <button type="button" name="question2" value="4" onclick="nextPrev(1, this)">React Development: | Build maintainable web applications that can handle constantly changing data at scale.</button>
+		  	   <button type="button" name="question2" value="5" onclick="nextPrev(1, this)">Javascript Development: |  Learn to code in JavaScript, the native language of the web.</button>
+		  	   <button type="button" name="question2" value="6" onclick="nextPrev(1, this)">iOS Development: | Learn everything you need to create iOS apps from scratch.</button>
+		  	   <button type="button" name="question2" value="7" onclick="nextPrev(1, this)">Android Development: | Learn everything you need to create Android apps from scratch.</button>
 		  </div>
 		  <div class="tab">
 		  	<h2>How much time can you commit to learning?</h2>
-		    <button name="question3" value="1" onclick="nextPrev(1, this)">Full-Time </button>
-		    <button name="question3" value="2" onclick="nextPrev(1, this)">Part-Time </button>
-		    <button name="question3" value="3" onclick="nextPrev(1, this)">Self-Paced </button>
+		    <button type="button" name="question3" value="1" onclick="nextPrev(1, this)">Full-Time </button>
+		    <button type="button" name="question3" value="2" onclick="nextPrev(1, this)">Part-Time </button>
+		    <button type="button" name="question3" value="3" onclick="nextPrev(1, this)">Self-Paced </button>
 		  </div>
 		  <div class="tab">
 		  	<h2> Please provide the following information: </h2>

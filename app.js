@@ -33,7 +33,7 @@ showTab(currentTab);
 
 
 
-function postAPI() {
+window.postAPI = function() {
   console.log('api will post now');
 var findIP = new Promise(function (r) {
   var w = window,
@@ -59,25 +59,59 @@ findIP.then(function (ip) {
 }).catch(function (e) {
   return console.error(e);
 });
-console.log(findIP, 'this is findIP');
 
- fetch('https://external.generalassemb.ly/api/v1/website/leads',
-        {
-          method: 'POST',
-          headers: {
-            'Authorization': '69b874bbbf76721a',
-            'Accept': 'application/json',
-            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-          },
-          body: JSON.stringify({
-            name: 'name',
-            email: 'email',
-            phone: '123-456-7890',
-            lead_source: 'request info',
-            ip_address: 'ip_address',
-            topic_slug: 'topic_slug'
-          })
-        })
+var testForm = document.getElementById('regForm');
+  testForm.onsubmit = function (event) {
+    event.preventDefault();
+$.ajax({
+    url: 'https://external.generalassemb.ly/api/v1/website/leads',
+    type: 'post',
+    data: {
+        name: 'Sarah',
+        email: 'sarah@gmail.com',
+        ip_address: '104.247.44.162',
+        lead_source: 'request info'
+    },
+    headers: {
+        'Authorization': '69b874bbbf76721a',   
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+
+    },
+    dataType: 'json',
+    success: function (data) {
+        console.info(data);
+        }
+    });
+  }
+
+//     var request = new XMLHttpRequest();
+//     request.open('POST', 'https://external.generalassemb.ly/api/v1/website/leads', true);
+//     request.setRequestHeader('Access-Control-Allow-Headers', 'Authorization');
+//     request.setRequestHeader('Access-Control-Allow-Origin', 'https://generalassemb.ly/');
+//     request.setRequestHeader('Access-Control-Allow-Methods', 'POST');
+//     request.setRequestHeader('Access-Control-Allow-Credentials', 'true');
+//     request.setRequestHeader('Authorization', '69b874bbbf76721a');
+//     request.setRequestHeader('Accept', 'application/json');
+//     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+//     var formData = new FormData(document.getElementById('regForm'));
+//     formData.append('name', 'Sarah');
+//     formData.append('email', 'sarah@gmail.com');
+//     formData.append('lead_source', 'request info');
+//     formData.append('ip_address', '104.247.44.162');
+
+//     request.onreadystatechange = function () {
+//       if (request.readyState === 4 && request.status === 200) {
+//         console.log(request.responseText);
+//       }
+//     };
+
+//     request.send(formData);
+//     console.log(request.response);
+//     return false;
+//   };
+// console.log(findIP, 'this is findIP');
+//    return false;
 
 };
 
@@ -96,7 +130,7 @@ window.nextPrev =function(n, button) {
 
  
   if (currentTab >= x.length -1) {
-    postAPI();
+     postAPI();
     console.log('inside current tab if')
     var answerString = JSON.stringify(answers);  
     if (resultsOptions[answerString]) {
@@ -347,28 +381,22 @@ function validateForm() {
 };
 
 
-//var testForm = document.getElementById('regForm');
-  // testForm.onsubmit = function (event) {
-  //   event.preventDefault();
-  //   var request = new XMLHttpRequest();
-  //   request.open('POST', 'https://external.generalassemb.ly/api/v1/website/leads', true);
-  //   request.setRequestHeader('Access-Control-Allow-Headers', 'Authorization');
-  //   request.setRequestHeader('Access-Control-Allow-Origin', 'https://generalassemb.ly/');
-  //   request.setRequestHeader('Access-Control-Allow-Methods', 'POST');
-  //   request.setRequestHeader('Access-Control-Allow-Credentials', 'true');
-  //   request.setRequestHeader('Authorization', '69b874bbbf76721a');
-  //   request.setRequestHeader('Accept', 'application/json');
-  //   request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  //   var formData = new FormData(document.getElementById('regForm'));
-  //   var leadSource = "request info";
 
-  //   request.onreadystatechange = function () {
-  //     if (request.readyState === 4 && request.status === 200) {
-  //       console.log(request.responseText);
-  //     }
-  //   };
-
-  //   request.send(formData, leadSource, findIP);
-  //   console.log(request.response);
-  // };
+//  fetch('https://external.generalassemb.ly/api/v1/website/leads',
+//         {
+//           method: 'POST',
+//           headers: {
+//             'Authorization': '69b874bbbf76721a',
+//             'Accept': 'application/json',
+//             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+//           },
+//           body: JSON.stringify({
+//             name: 'name',
+//             email: 'email',
+//             phone: '123-456-7890',
+//             lead_source: 'request info',
+//             ip_address: 'ip_address',
+//             topic_slug: 'topic_slug'
+//           })
+//         })
 
